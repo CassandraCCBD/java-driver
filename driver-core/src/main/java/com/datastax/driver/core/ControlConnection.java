@@ -58,7 +58,6 @@ class ControlConnection implements Host.StateListener, Connection.Owner {
     private static final String SELECT_PEERS = "SELECT * FROM system.peers";
     private static final String SELECT_LOCAL = "SELECT * FROM system.local WHERE key='local'";
 
-    private static final String SELECT_SCHEMA_PEERS = "SELECT peer, rpc_address, schema_version FROM system.peers";
     private static final String SELECT_SCHEMA_LOCAL = "SELECT schema_version FROM system.local WHERE key='local'";
 
     @VisibleForTesting
@@ -720,7 +719,7 @@ class ControlConnection implements Host.StateListener, Connection.Owner {
         if (connection == null || connection.isClosed())
             return false;
 
-        DefaultResultSetFuture peersFuture = new DefaultResultSetFuture(null, cluster.protocolVersion(), new Requests.Query(SELECT_SCHEMA_PEERS));
+        DefaultResultSetFuture peersFuture = new DefaultResultSetFuture(null, cluster.protocolVersion(), new Requests.Query(SELECT_PEERS));
         DefaultResultSetFuture localFuture = new DefaultResultSetFuture(null, cluster.protocolVersion(), new Requests.Query(SELECT_SCHEMA_LOCAL));
         connection.write(peersFuture);
         connection.write(localFuture);
