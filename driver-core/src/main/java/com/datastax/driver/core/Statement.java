@@ -68,7 +68,7 @@ public abstract class Statement {
     private volatile ByteBuffer pagingState;
     protected volatile Boolean idempotent;
     private volatile Map<String, ByteBuffer> outgoingPayload;
-
+    private volatile int tag;
     // We don't want to expose the constructor, because the code relies on this being only sub-classed by RegularStatement, BoundStatement and BatchStatement
     Statement() {
     }
@@ -95,6 +95,15 @@ public abstract class Statement {
         return consistency;
     }
 
+    public Statement setTag(int tag){
+       this.tag=tag;
+       return this;
+    }
+
+    public int getTag()
+    {
+    	return tag;
+    }
     /**
      * Sets the serial consistency level for the query.
      * <p/>
